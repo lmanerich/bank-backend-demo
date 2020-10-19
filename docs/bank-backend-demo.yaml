@@ -1,17 +1,115 @@
-openapi: '3.0.0'
+openapi: 3.0.0
 info:
-    version: 1.0.0
-    title: Bank Backend Demo
-    license:
-        name: ISC
+  version: 1.0.0
+  title: Bank Backend Demo
 servers:
-    - url: http://localhost:3000
+  - url: http://localhost:3000
 paths:
-    /greeting:
-        get:
-            summary: Get a greeting from backend
-            tags:
-                - greeting
-            responses:
-                '200':
-                    description: A greeting message from backend
+  /greeting:
+    get:
+      summary: Get a greeting from backend
+      tags:
+        - greeting
+      responses:
+        '200':
+          description: A greeting message from backend
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Hi!
+
+  /reset:
+    post:
+      summary: Reset state before starting tests
+      tags:
+        - reset
+      responses:
+        '200':
+          description: Reset confirmation
+
+  /balance:
+    get:
+      summary: Get balance for an account
+      tags:
+        - balance
+      parameters:
+        - name: account_id
+          in: query
+          description: What account id to get the balance for?
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Account balance information
+          content:
+            text/plain:
+              schema:
+                type: number
+                example: 500.35
+        '404':
+          description: Account not found
+
+  /event:
+    post:
+      summary: Create a financial transaction
+      tags:
+        - event
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event'
+            example:
+              type: deposit
+              amount: 100.75
+              destination: '100'
+      responses:
+        '200':
+          description: Transfer object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transfer'
+              example:
+                destination:
+                  id: '100'
+                  balance: 575.89
+        '404':
+          description: Account not found
+
+components:
+  schemas:
+    Account:
+      type: object
+      required:
+        - id
+        - balance
+      properties:
+        id:
+          type: string
+        balance:
+          type: number
+    Event:
+      type: object
+      required:
+        - type
+        - amount
+      properties:
+        type:
+          type: string
+          enum: [deposit, withdraw, transfer]
+        amount:
+          type: number
+        origin:
+          type: string
+        destination:
+          type: string
+    Transfer:
+      type: object
+      properties:
+        origin:
+          $ref: '#/components/schemas/Account'
+        destination:
+          $ref: '#/components/schemas/Account'
