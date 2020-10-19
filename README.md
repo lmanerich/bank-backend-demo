@@ -8,6 +8,10 @@ NodeJS project for a bank backend demo
 
 -   [NodeJS](https://nodejs.org/en/download/)
 
+## OpenAPI 3.0
+
+[API Documentation](https://lmanerich.github.io/bank-backend-demo/)
+
 ## How to deploy
 
 ```
