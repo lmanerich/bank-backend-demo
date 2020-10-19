@@ -26,6 +26,7 @@ export const databaseService = {
 
     updateAccount(account: Account): Account {
         this.accounts().find({ id: account.id }).assign(account).write();
+        return account;
     },
 
     getAccount(accountId: string): Account {
