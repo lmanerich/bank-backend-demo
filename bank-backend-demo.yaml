@@ -1,0 +1,17 @@
+openapi: '3.0.0'
+info:
+    version: 1.0.0
+    title: Bank Backend Demo
+    license:
+        name: ISC
+servers:
+    - url: http://localhost:3000
+paths:
+    /greeting:
+        get:
+            summary: Get a greeting from backend
+            tags:
+                - greeting
+            responses:
+                '200':
+                    description: A greeting message from backend
