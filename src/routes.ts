@@ -1,12 +1,9 @@
 import { accountController } from '@src/controllers/account.controller';
 import { eventController } from '@src/controllers/event.controller';
-import { greetingController } from '@src/controllers/greeting.controller';
 import { resetController } from '@src/controllers/reset.controller.';
 import express from 'express';
 
 export default (app: express.Application) => {
-    app.route('/greeting').get(greetingController.getGreeting);
-
     // TODO it would be better a GET request to /balance/:accountId
     //app.route('/balance/:accountId').get(accountController.getBalance);
     app.route('/balance').get(accountController.getBalance);

@@ -5,20 +5,6 @@ info:
 servers:
   - url: http://localhost:3000
 paths:
-  /greeting:
-    get:
-      summary: Get a greeting from backend
-      tags:
-        - greeting
-      responses:
-        '200':
-          description: A greeting message from backend
-          content:
-            text/plain:
-              schema:
-                type: string
-                example: Hi!
-
   /reset:
     post:
       summary: Reset state before starting tests
