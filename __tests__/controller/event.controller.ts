@@ -74,6 +74,7 @@ describe('event controller test', () => {
         };
         const result = await request(app).post('/event').send(deposit);
         expect(result.status).toEqual(201);
+        expect(result.text).toEqual('{"destination":{"id":"100","balance":20}}');
     });
 
     test('POST /event withdraw with valid origin', async () => {
@@ -127,5 +128,6 @@ describe('event controller test', () => {
         };
         const result = await request(app).post('/event').send(deposit);
         expect(result.status).toEqual(201);
+        expect(result.text).toEqual('{"origin":{"id":"100","balance":0},"destination":{"id":"300","balance":10}}');
     });
 });
