@@ -56,6 +56,16 @@ describe('event controller test', () => {
         expect(result.status).toEqual(404);
     });
 
+    test('POST /event withdraw with invalid amount', async () => {
+        const deposit: Event = {
+            type: EventType.WITHDRAW,
+            amount: -10,
+            origin: '100',
+        };
+        const result = await request(app).post('/event').send(deposit);
+        expect(result.status).toEqual(400);
+    });
+
     test('POST /event deposit with destination and amount', async () => {
         const deposit: Event = {
             type: EventType.DEPOSIT,
@@ -77,6 +87,15 @@ describe('event controller test', () => {
         expect(result.text).toEqual('{"origin":{"id":"100","balance":10}}');
     });
 
+    test('POST /event transfer without origin and destination', async () => {
+        const deposit: Event = {
+            type: EventType.TRANSFER,
+            amount: 10,
+        };
+        const result = await request(app).post('/event').send(deposit);
+        expect(result.status).toEqual(400);
+    });
+
     test('POST /event transfer with invalid origin', async () => {
         const deposit: Event = {
             type: EventType.TRANSFER,
@@ -86,6 +105,17 @@ describe('event controller test', () => {
         };
         const result = await request(app).post('/event').send(deposit);
         expect(result.status).toEqual(404);
+    });
+
+    test('POST /event transfer with invalid amount', async () => {
+        const deposit: Event = {
+            type: EventType.TRANSFER,
+            amount: -10,
+            origin: '200',
+            destination: '300',
+        };
+        const result = await request(app).post('/event').send(deposit);
+        expect(result.status).toEqual(400);
     });
 
     test('POST /event transfer with origin, destination and amount', async () => {
