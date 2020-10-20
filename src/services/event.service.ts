@@ -67,7 +67,6 @@ export const eventService = {
             throw new AccountNotFoundError(event.origin);
         }
 
-        console.log(origin);
         let destination: Account = accountService.getAccount(event.destination);
         if (!destination) {
             destination = accountService.createAccount({

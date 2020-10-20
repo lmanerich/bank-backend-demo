@@ -3,6 +3,10 @@ import { EventType } from '@src/models/event-type.model';
 import { Event } from '@src/models/event.model';
 import request from 'supertest';
 
+afterAll(async () => {
+    await request(app).post('/reset');
+});
+
 describe('reset controller test', () => {
     test('POST /reset', async () => {
         const deposit: Event = {
