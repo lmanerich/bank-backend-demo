@@ -54,7 +54,6 @@ export const eventService = {
         return transfer;
     },
     processTransfer(event: Event): Transfer {
-        console.log(event);
         if (!event.origin || !event.destination) {
             throw new InvalidAccountError();
         }

@@ -22,7 +22,7 @@ export const eventController = {
                     transfer = eventService.processTransfer(event);
                     break;
                 default:
-                    res.status(404).send('0');
+                    res.status(400).send('0');
                     return;
             }
 

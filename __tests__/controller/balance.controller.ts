@@ -3,6 +3,10 @@ import { EventType } from '@src/models/event-type.model';
 import { Event } from '@src/models/event.model';
 import request from 'supertest';
 
+beforeAll(async () => {
+    await request(app).post('/reset');
+});
+
 describe('balance controller test', () => {
     test('GET /balance without account_id', async () => {
         const result = await request(app).get('/balance');
