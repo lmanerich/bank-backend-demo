@@ -69,7 +69,18 @@ describe('event controller test', () => {
     test('POST /event deposit with destination and amount', async () => {
         const deposit: Event = {
             type: EventType.DEPOSIT,
-            amount: 20,
+            amount: 10,
+            destination: '100',
+        };
+        const result = await request(app).post('/event').send(deposit);
+        expect(result.status).toEqual(201);
+        expect(result.text).toEqual('{"destination":{"id":"100","balance":10}}');
+    });
+
+    test('POST /event deposit to an existing account', async () => {
+        const deposit: Event = {
+            type: EventType.DEPOSIT,
+            amount: 10,
             destination: '100',
         };
         const result = await request(app).post('/event').send(deposit);
