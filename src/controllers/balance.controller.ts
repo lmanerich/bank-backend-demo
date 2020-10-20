@@ -2,7 +2,7 @@ import { Account } from '@src/models/account.model';
 import { accountService } from '@src/services/account.service';
 import { Request, Response } from 'express';
 
-export const accountController = {
+export const balanceController = {
     getBalance: async (req: Request, res: Response) => {
         if (req.query.account_id) {
             const accountId: string = req.query.account_id.toString();
