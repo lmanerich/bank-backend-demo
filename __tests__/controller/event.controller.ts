@@ -74,7 +74,7 @@ describe('event controller test', () => {
         };
         const result = await request(app).post('/event').send(deposit);
         expect(result.status).toEqual(201);
-        expect(result.text).toEqual('{"destination":{"id":"100","balance":10}}');
+        expect(result.text).toEqual('{"destination":{"id":"100","balance":10,"creditLimit":100}}');
     });
 
     test('POST /event deposit to an existing account', async () => {
@@ -85,7 +85,7 @@ describe('event controller test', () => {
         };
         const result = await request(app).post('/event').send(deposit);
         expect(result.status).toEqual(201);
-        expect(result.text).toEqual('{"destination":{"id":"100","balance":20}}');
+        expect(result.text).toEqual('{"destination":{"id":"100","balance":20,"creditLimit":100}}');
     });
 
     test('POST /event withdraw with valid origin', async () => {
@@ -96,7 +96,7 @@ describe('event controller test', () => {
         };
         const result = await request(app).post('/event').send(deposit);
         expect(result.status).toEqual(201);
-        expect(result.text).toEqual('{"origin":{"id":"100","balance":10}}');
+        expect(result.text).toEqual('{"origin":{"id":"100","balance":10,"creditLimit":100}}');
     });
 
     test('POST /event transfer without origin and destination', async () => {
@@ -139,6 +139,6 @@ describe('event controller test', () => {
         };
         const result = await request(app).post('/event').send(deposit);
         expect(result.status).toEqual(201);
-        expect(result.text).toEqual('{"origin":{"id":"100","balance":0},"destination":{"id":"300","balance":10}}');
+        expect(result.text).toEqual('{"origin":{"id":"100","balance":0,"creditLimit":100},"destination":{"id":"300","balance":10,"creditLimit":100}}');
     });
 });

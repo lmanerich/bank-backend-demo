@@ -1,9 +1,18 @@
 import { Account } from '@src/models/account.model';
 import { Event } from '@src/models/event.model';
-import { AccountNotFoundError, InvalidAccountError, InvalidAmountError } from '@src/models/service-error.model';
+import { AccountNotFoundError, InsuficientFundsError, InvalidAccountError, InvalidAmountError } from '@src/models/service-error.model';
 import { Transfer } from '@src/models/transfer.model';
 import { accountService } from '@src/services/account.service';
 import { databaseService } from '@src/services/database.service';
+
+function calculateBalance(account: Account, amount: number): number {
+    const newBalance: number = account.balance - amount;
+    if (newBalance < account.creditLimit * -1) {
+        throw new InsuficientFundsError();
+    }
+
+    return newBalance;
+}
 
 export const eventService = {
     processDeposit(event: Event): Transfer {
@@ -20,6 +29,7 @@ export const eventService = {
             destination = accountService.createAccount({
                 id: event.destination,
                 balance: event.amount,
+                creditLimit: 100,
             });
         } else {
             destination.balance += event.amount;
@@ -45,7 +55,7 @@ export const eventService = {
             throw new AccountNotFoundError(event.origin);
         }
 
-        origin.balance -= event.amount;
+        origin.balance = calculateBalance(origin, event.amount);
         databaseService.updateAccount(origin);
 
         const transfer: Transfer = {
@@ -72,10 +82,11 @@ export const eventService = {
             destination = accountService.createAccount({
                 id: event.destination,
                 balance: 0,
+                creditLimit: 100,
             });
         }
 
-        origin.balance -= event.amount;
+        origin.balance = calculateBalance(origin, event.amount);
         databaseService.updateAccount(origin);
 
         destination.balance += event.amount;

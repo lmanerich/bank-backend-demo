@@ -17,6 +17,7 @@ describe('account service test', () => {
         const account: Account = {
             id: '100',
             balance: 10,
+            creditLimit: 100,
         };
         const result: Account = accountService.createAccount(account);
 

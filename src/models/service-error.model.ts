@@ -35,3 +35,10 @@ export class InvalidAmountError extends ServiceError {
         Object.setPrototypeOf(this, InvalidAmountError.prototype);
     }
 }
+
+export class InsuficientFundsError extends ServiceError {
+    constructor() {
+        super(400, 'InsuficientFundsError', 'Insuficient funds for this operation');
+        Object.setPrototypeOf(this, InsuficientFundsError.prototype);
+    }
+}
